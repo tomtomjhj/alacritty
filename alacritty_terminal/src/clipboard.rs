@@ -23,8 +23,8 @@ use clipboard::x11_clipboard::{Primary as X11SecondaryClipboard, X11ClipboardCon
 use clipboard::{ClipboardContext, ClipboardProvider};
 
 pub struct Clipboard {
-    primary: Box<ClipboardProvider>,
-    secondary: Option<Box<ClipboardProvider>>,
+    primary: Box<dyn ClipboardProvider>,
+    secondary: Option<Box<dyn ClipboardProvider>>,
 }
 
 impl Clipboard {
