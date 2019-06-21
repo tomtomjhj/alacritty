@@ -1922,7 +1922,7 @@ impl ansi::Handler for Term {
     /// Set the clipboard
     #[inline]
     fn set_clipboard(&mut self, string: &str) {
-        self.clipboard.store(ClipboardType::Clipboard, string);
+        self.clipboard.store(ClipboardType::Primary, string);
     }
 
     #[inline]

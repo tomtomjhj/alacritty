@@ -269,16 +269,16 @@ impl Action {
                 ctx.write_to_pty(s.clone().into_bytes())
             },
             Action::Copy => {
-                ctx.copy_selection(ClipboardType::Clipboard);
+                ctx.copy_selection(ClipboardType::Primary);
             },
             Action::Paste => {
-                let text = ctx.terminal_mut().clipboard().load(ClipboardType::Clipboard);
+                let text = ctx.terminal_mut().clipboard().load(ClipboardType::Primary);
                 self.paste(ctx, &text);
             },
             Action::PasteSelection => {
                 // Only paste if mouse events are not captured by an application
                 if !mouse_mode {
-                    let text = ctx.terminal_mut().clipboard().load(ClipboardType::Selection);
+                    let text = ctx.terminal_mut().clipboard().load(ClipboardType::Secondary);
                     self.paste(ctx, &text);
                 }
             },
@@ -947,9 +947,9 @@ impl<'a, A: ActionContext + 'a> Processor<'a, A> {
     /// Copy text selection.
     fn copy_selection(&mut self) {
         if self.save_to_clipboard {
-            self.ctx.copy_selection(ClipboardType::Clipboard);
+            self.ctx.copy_selection(ClipboardType::Primary);
         }
-        self.ctx.copy_selection(ClipboardType::Selection);
+        self.ctx.copy_selection(ClipboardType::Secondary);
     }
 }
 
